@@ -1,0 +1,27 @@
+name: openml-cli
+channels:
+  - defaults
+dependencies:
+  - ca-certificates=2018.03.07=0
+  - certifi=2018.10.15=py27_0
+  - libcxx=4.0.1=hcfea43d_1
+  - libcxxabi=4.0.1=hcfea43d_1
+  - libedit=3.1.20170329=hb402a30_2
+  - libffi=3.2.1=h475c297_4
+  - ncurses=6.1=h0a44026_0
+  - openssl=1.1.1a=h1de35cc_0
+  - pip=18.1=py27_0
+  - python=2.7.15=h8f8e585_4
+  - readline=7.0=h1de35cc_5
+  - setuptools=40.6.2=py27_0
+  - sqlite=3.25.3=ha441bb4_0
+  - tk=8.6.8=ha441bb4_0
+  - wheel=0.32.3=py27_0
+  - zlib=1.2.11=h1de35cc_3
+  - pip:
+    - protobuf==3.6.1
+    - pycairo==1.18.0
+    - six==1.11.0
+    - tbb==0.1
+prefix: /opt/miniconda/envs/openml-cli
+
