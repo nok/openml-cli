@@ -1,0 +1,140 @@
+swagger: '2.0'
+
+info:
+  version: "v1"
+  title: OpenML API
+
+host: www.openml.org
+basePath: /api/v1/json
+schemes:
+  - https
+
+securityDefinitions:
+#  APIKeyHeader:
+#    type: apiKey
+#    in: header
+#    name: X-ApiKey
+  APIKeyQueryParam:
+    type: apiKey
+    in: query
+    name: api_key
+
+paths:
+  /data/{id}:
+    get:
+      summary: Get a dataset.
+      operationId: getDataSetById
+      tags:
+        - dataset
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          minimum: 1
+          required: true
+      security:
+        - APIKeyQueryParam: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DataSetWrapper'
+  /data/features/{id}:
+    get:
+      summary: Get features of a dataset.
+      operationId: getDataFeaturesById
+      tags:
+        - dataset
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          minimum: 1
+          required: true
+      security:
+        - APIKeyQueryParam: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DataFeatureWrapper'
+
+definitions:
+
+  DataFeatureWrapper:
+    type: object
+    properties:
+      data_features:
+        $ref: '#/definitions/DataFeatureList'
+
+  DataFeatureList:
+    type: object
+    properties:
+      feature:
+        type: array
+        items:
+          $ref: '#/definitions/DataFeature'
+
+  DataFeature:
+    type: object
+    properties:
+      index:
+        type: string
+      name:
+        type: string
+      data_type:
+        type: string
+      is_target:
+        type: string
+      is_ignore:
+        type: string
+      is_row_identifier:
+        type: string
+
+  DataSetWrapper:
+    type: object
+    properties:
+      data_set_description:
+        $ref: '#/definitions/DataSet'
+
+  DataSet:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      version:
+        type: string
+      description:
+        type: string
+      format:
+        type: string
+      upload_date:
+        type: string
+      licence:
+        type: string
+      url:
+        type: string
+      file_id:
+        type: string
+      default_target_attribute:
+        type: string
+      version_label:
+        type: string
+      visibility:
+        type: string
+      status:
+        type: string
+      processing_date:
+        type: string
+      md5_checksum:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
