@@ -3,13 +3,14 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
-# import os
-# from os.path import abspath, expanduser, join
+import os
+from os.path import abspath, expanduser, join
 from argparse import ArgumentParser, SUPPRESS, RawTextHelpFormatter, _HelpAction
+from dotenv import load_dotenv, find_dotenv
 
-from . import *
-from .. import __version__
-from ..utils import dedent
+from openml_cli import __version__
+from openml_cli.cli import *
+from openml_cli.utils import dedent
 
 
 def add_arg_help(p):
@@ -96,6 +97,25 @@ def configure_parser_config(p):
 
 
 def main():
+
+    # Config? JSON?
+    config_file = os.path.expanduser('~/.openml/config')
+    if not os.path.exists(config_file):
+        os.makedirs(os.path.expanduser('~/.openml'), exist_ok=True)
+        with open(config_file, 'wt') as fh:
+            fh.write('apikey')
+    else:
+        props = {}
+        with open(config_file, "rt") as fh:
+            for line in fh:
+                l = line.strip()
+                if l and not l.startswith('#'):
+                    key_value = l.split('=')
+                    if len(key_value) == 2:
+                        key = key_value[0].strip().strip('"')
+                        value = key_value[1].strip().strip('"')
+                        props[key] = value
+
     parse_args(sys.argv[1:])
 
 
