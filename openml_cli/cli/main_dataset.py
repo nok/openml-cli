@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-def execute(config, args):
+def main(config, args):
     print('config', config)
     print('args', args)

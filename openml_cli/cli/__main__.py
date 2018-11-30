@@ -3,10 +3,10 @@
 import os
 import sys
 from argparse import ArgumentParser, SUPPRESS, RawTextHelpFormatter, _HelpAction
-from dotenv import load_dotenv, find_dotenv
 
 from openml_cli import __version__
 from openml_cli.cli import *
+from openml_cli.api.Config import Config
 from openml_cli.utils import dedent
 
 
@@ -21,7 +21,7 @@ def _add_arg_version(p):
     p.add_argument(
         '-v', '--version',
         action='version',
-        version='openml v{}'.format(__version__),
+        version='{}'.format(__version__),
         help='Show the version number and exit.')
 
 
@@ -33,36 +33,102 @@ def _add_arg_debug(p):
 
 
 def _configure_parser_dataset(p):
+    """Configure `datasets` subparser"""
     sp = p.add_parser(
         'dataset',
         description='dataset description',
-        help='dataset help',
+        help='Search or download datasets.',
         epilog='dataset epilog',
         add_help=False,
     )
     _add_arg_help(sp)
-    sp.set_defaults(func=main_dataset.execute)
+    sp.set_defaults(func=main_dataset.main)
 
 
 def _configure_parser_config(p):
-    sp = p.add_parser(
+    """Configure `config` subparser"""
+
+    # command `config`
+    config_p = p.add_parser(
         'config',
-        description='config description',
-        help='config help',
-        epilog='config epilog',
+        description='List and change the configuration.',
+        help='List and change the configuration.',
         add_help=False,
     )
-    _add_arg_help(sp)
-    sp.set_defaults(func=main_config.execute)
+    sub = config_p.add_subparsers(
+        metavar='subcommand',
+        dest='subcmd',
+    )
+    sub.required = True
+
+    # subcommand `config view`
+    config_view_p = sub.add_parser(
+        'view',
+        description='dataset description',
+        help='Print all configuration parameters.',
+        add_help=False,
+    )
+    config_view_p.set_defaults(func=main_config.main)
+
+    # subcommand `config set --name NAME --value VALUE`
+    config_set_p = sub.add_parser(
+        'set',
+        description='Change the configuration.',
+        help='Change a configuration parameter.',
+        add_help=False,
+    )
+    config_set_p.set_defaults(func=main_config.main)
+    config_set_p.add_argument(
+        '--name', '-n',
+        choices=Config.DEFAULT_PARAMS.keys(),
+        required=True,
+        help='Set the key of the parameter.'
+    )
+    config_set_p.add_argument(
+        '--value', '-v',
+        required=True,
+        help='Set the value of the parameter.'
+    )
+    _add_arg_help(config_set_p)
+
+    # subcommand `config unset --name NAME`
+    config_unset_p = sub.add_parser(
+        'unset',
+        description='Revert the configuration.',
+        help='Revert a configuration parameter.',
+        # epilog='',
+        add_help=False,
+    )
+    config_unset_p.set_defaults(func=main_config.main)
+    config_unset_p.add_argument(
+        '--name', '-n',
+        choices=Config.DEFAULT_PARAMS.keys(),
+        required=True,
+        help='Set the key of the parameter.'
+    )
+    _add_arg_help(config_unset_p)
+
+    _add_arg_help(config_p)
+    if len(sys.argv) == 2 and sys.argv[1] == 'config':
+        config_p.print_help(sys.stdout)
+        sys.exit(1)
 
 
 def parse_args(args):
-    description = dedent("""
-        OpenML CLI
-    """)
-    epilog = 'More details on https://github.com/nok/openml-cli'
+    """Load and parse applied arguments"""
 
-    # Setup parser:
+    description = dedent("""
+        OpenML CLI v{}
+          https://github.com/nok/openml-cli
+          https://www.openml.org/
+    """).format(__version__)
+
+    epilog = dedent("""
+        examples:
+          `oml config view`
+          `oml config set apikey YOUR_APIKEY`
+    """).format(__version__)
+
     p = ArgumentParser(
         description=description,
         epilog=epilog,
@@ -72,7 +138,6 @@ def parse_args(args):
     _add_arg_version(p)
     _add_arg_debug(p)
 
-    # Setup subparsers:
     sp = p.add_subparsers(
         metavar='command',
         dest='cmd',
@@ -81,53 +146,29 @@ def parse_args(args):
     _configure_parser_dataset(sp)
     _configure_parser_config(sp)
 
-    # Show help by default:
     if len(sys.argv) == 1:
-        p.print_help(sys.stderr)
+        p.print_help(sys.stdout)
         sys.exit(1)
 
     return p.parse_args(args)
 
 
-def parse_config():
-    # https://openml.github.io/OpenML/Client-API-Standards/
-    cfg_file_path = os.path.expanduser('~/.openml/config')
-
-    # Default config:
-    config = {
-        'server': 'https://www.openml.org',
-        'verbosity': '0'
-    }
-
-    # Write config:
-    if not os.path.exists(cfg_file_path):
-        os.makedirs(os.path.expanduser('~/.openml'))
-        with open(cfg_file_path, 'wt') as fh:
-            for key, value in config.items():
-                line = '{}=[]\n'.format(key, value)
-                fh.write(str(line))
-        return config
-
-    # Read config:
-    with open(cfg_file_path, 'rt') as fh:
-        for line in fh:
-            line = line.strip()
-            if line and not line.startswith('#'):
-                key_value = line.split('=')
-                if len(key_value) == 2:
-                    key = key_value[0].strip().strip('"')
-                    value = key_value[1].strip().strip('"')
-                    config[key] = value
-    return config
+def parse_env():
+    """Load and parse .env file"""
+    env_file = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
+    if os.path.exists(env_file):
+        from dotenv import load_dotenv
+        load_dotenv(dotenv_path=env_file, override=True)
 
 
 def main():
+    config = Config('~/.openml/config')
     args = parse_args(sys.argv[1:])
-    config = parse_config()
+
     if hasattr(args, 'func'):
         func = args.func
         delattr(args, 'func')
-        func(config, args)
+        func(config, vars(args))
 
 
 if __name__ == "__main__":
