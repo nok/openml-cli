@@ -126,7 +126,7 @@ def parse_args(args):
     epilog = dedent("""
         examples:
           `oml config view`
-          `oml config set apikey YOUR_APIKEY`
+          `oml config set --name apikey --value YOUR_APIKEY`
     """).format(__version__)
 
     p = ArgumentParser(
