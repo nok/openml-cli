@@ -32,7 +32,7 @@ def main(config, args):
                           qualities['number_of_features'],
                           qualities['number_of_instances'])
                 tbl.append(values)
-            print(tabulate(tbl, headers=headers))
+            print(tabulate(tbl, floatfmt=".0f", headers=headers))
             print('(parameters: limit={}, offset={})'.format(
                 args['limit'], args['offset']))
 
