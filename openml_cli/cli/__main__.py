@@ -32,6 +32,15 @@ def _add_arg_debug(p):
         help=SUPPRESS)
 
 
+def _add_arg_json(p):
+    p.add_argument(
+        '--json',
+        required=False,
+        default=False,
+        action='store_true',
+        help='Return result in JSON format.')
+
+
 def _configure_parser_datasets(p):
     """Configure `datasets` subparser"""
 
@@ -74,6 +83,7 @@ def _configure_parser_datasets(p):
         default=1,
         help='Set the offset of results.',
     )
+    _add_arg_json(config_list_p)
     config_list_p.set_defaults(func=main_dataset.main)
 
     # subcommand `config dataset show --id ID`
@@ -89,6 +99,7 @@ def _configure_parser_datasets(p):
         type=int,
         help='Set the unique ID of a dataset.'
     )
+    _add_arg_json(config_show_p)
     config_show_p.set_defaults(func=main_dataset.main)
 
     _add_arg_help(datasets_p)
