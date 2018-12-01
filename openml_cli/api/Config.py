@@ -24,11 +24,20 @@ class Config:
         return self.config.get(item)
 
     @property
-    def has_apikey(self):
+    def server(self):
+        if 'server' in self.config.keys():
+            server = self.config.get('server')
+            if server != '':
+                return server
+        return None
+
+    @property
+    def apikey(self):
         if 'apikey' in self.config.keys():
             apikey = self.config.get('apikey')
-            return apikey != ''
-        return False
+            if apikey != '':
+                return apikey
+        return None
 
     @staticmethod
     def init(path):
@@ -82,7 +91,7 @@ class Config:
 
     def __str__(self):
         out = [
-            'Configuration values from {} :'.format(self.path),
             tabulate(sorted(self.config.items()), headers=['name', 'value']),
+            '({})'.format(self.path)
         ]
         return '\n'.join(out)

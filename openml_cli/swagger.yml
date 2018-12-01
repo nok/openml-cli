@@ -1,7 +1,7 @@
 swagger: '2.0'
 
 info:
-  version: "v1"
+  version: 'v1'
   title: OpenML API
 
 host: www.openml.org
@@ -9,17 +9,18 @@ basePath: /api/v1/json
 schemes:
   - https
 
-securityDefinitions:
+#securityDefinitions:
 #  APIKeyHeader:
 #    type: apiKey
 #    in: header
 #    name: X-ApiKey
-  APIKeyQueryParam:
-    type: apiKey
-    in: query
-    name: api_key
+#  APIKeyQueryParam:
+#    type: apiKey
+#    in: query
+#    name: api_key
 
 paths:
+
   /data/{id}:
     get:
       summary: Get a dataset.
@@ -32,8 +33,8 @@ paths:
           type: integer
           minimum: 1
           required: true
-      security:
-        - APIKeyQueryParam: []
+#      security:
+#        - APIKeyQueryParam: []
       produces:
         - application/json
       responses:
@@ -41,6 +42,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/DataSetWrapper'
+
   /data/features/{id}:
     get:
       summary: Get features of a dataset.
@@ -53,8 +55,8 @@ paths:
           type: integer
           minimum: 1
           required: true
-      security:
-        - APIKeyQueryParam: []
+#      security:
+#        - APIKeyQueryParam: []
       produces:
         - application/json
       responses:
@@ -62,6 +64,31 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/DataFeatureWrapper'
+
+  /data/list/limit/{limit}/offset/{offset}:
+    get:
+      summary: Get a list of datasets.
+      operationId: getDataByLimitAndOffset
+      tags:
+        - dataset
+      parameters:
+        - in: path
+          name: limit
+          type: integer
+          minimum: 1
+          required: true
+        - in: path
+          name: offset
+          type: integer
+          minimum: 1
+          required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DataListWrapper'
 
 definitions:
 
@@ -138,3 +165,45 @@ definitions:
         type: array
         items:
           type: string
+
+  DataListWrapper:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/DataListSet'
+
+  DataListSet:
+    type: object
+    properties:
+      dataset:
+        type: array
+        items:
+          $ref: '#/definitions/DataListSetItem'
+
+  DataListSetItem:
+    type: object
+    properties:
+      did:
+        type: integer
+      name:
+        type: string
+      version:
+        type: integer
+      status:
+        type: string
+      format:
+        type: string
+      file_id:
+        type: integer
+      quality:
+        type: array
+        items:
+          $ref: '#/definitions/DataListSetItemQuality'
+
+  DataListSetItemQuality:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
