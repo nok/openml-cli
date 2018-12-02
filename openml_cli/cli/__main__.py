@@ -111,6 +111,22 @@ def _configure_parser_datasets(p):
     _add_arg_help(config_show_p)
     config_show_p.set_defaults(func=main_dataset.main)
 
+    # subcommand `config dataset download --id ID`
+    config_download_p = sub.add_parser(
+        'download',
+        description='Download a specific dataset.',
+        help='Download a specific dataset.',
+        add_help=False,
+    )
+    config_download_p.add_argument(
+        '--id',
+        required=True,
+        type=int,
+        help='The unique ID of a dataset.'
+    )
+    _add_arg_help(config_download_p)
+    config_download_p.set_defaults(func=main_dataset.main)
+
     _add_arg_help(datasets_p)
     if len(sys.argv) == 2 and sys.argv[1] == 'dataset':
         datasets_p.print_help(sys.stdout)

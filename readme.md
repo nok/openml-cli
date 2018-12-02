@@ -42,6 +42,7 @@ oml dataset list --limit 5 --offset 10 --json
 oml dataset show --id 1
 oml dataset show --id 1 --json
 oml dataset show --id 1 --browser
+oml dataset download --id 1
 ```
 
 
