@@ -84,6 +84,7 @@ def _configure_parser_datasets(p):
         help='Set the offset of results.',
     )
     _add_arg_json(config_list_p)
+    _add_arg_help(config_list_p)
     config_list_p.set_defaults(func=main_dataset.main)
 
     # subcommand `config dataset show --id ID`
@@ -107,6 +108,7 @@ def _configure_parser_datasets(p):
         help='Open related site in a browser.'
     )
     _add_arg_json(config_show_p)
+    _add_arg_help(config_show_p)
     config_show_p.set_defaults(func=main_dataset.main)
 
     _add_arg_help(datasets_p)
@@ -173,7 +175,6 @@ def _configure_parser_config(p):
         'unset',
         description='Revert the configuration.',
         help='Revert a configuration parameter.',
-        # epilog='',
         add_help=False,
     )
     config_unset_p.set_defaults(func=main_config.main)
