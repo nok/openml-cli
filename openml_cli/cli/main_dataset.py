@@ -71,6 +71,14 @@ def main(config, args):
                 ('processing_date', res.data_set_description.processing_date),
             ]
 
+            # Browser:
+            if args['browser']:
+                import webbrowser
+                url = 'https://www.openml.org/d/{}'.format(
+                    res.data_set_description.id)
+                webbrowser.open(url)
+                sys.exit(0)
+
             # Output:
             if args['json']:
                 print(json.dumps(dict(tbl), indent=4, sort_keys=True))

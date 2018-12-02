@@ -97,7 +97,14 @@ def _configure_parser_datasets(p):
         '--id',
         required=True,
         type=int,
-        help='Set the unique ID of a dataset.'
+        help='The unique ID of a dataset.'
+    )
+    config_show_p.add_argument(
+        '--browser', '-b',
+        required=False,
+        default=False,
+        action='store_true',
+        help='Open related site in a browser.'
     )
     _add_arg_json(config_show_p)
     config_show_p.set_defaults(func=main_dataset.main)
