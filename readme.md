@@ -1,6 +1,6 @@
 # openml-cli
 
-Use the application `openml` on the command line to interact with the official [API](https://openml.github.io/OpenML/REST-API/) of [OpenML](https://www.openml.org) directly.
+Use the command line tool `openml` to interact with the official [API](https://openml.github.io/OpenML/REST-API/) of [OpenML](https://www.openml.org).
 
 
 ## Installation
