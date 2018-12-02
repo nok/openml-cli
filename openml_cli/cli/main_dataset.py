@@ -26,24 +26,28 @@ def main(config, args):
             # Processing:
             headers = ('id', 'file_id', 'name', 'number_of_classes',
                        'number_of_features', 'number_of_instances')
-            tbl = []
+            entries = []
             for d in res.data.dataset:
                 qualities = ()
                 for idx, quality in enumerate(sorted(d.quality)):
                     qualities += ((_camel_to_snake(quality.name), quality.value), )
                 qualities = dict(qualities)
-                values = (d.did, d.file_id, d.name,
-                          int(float(qualities['number_of_classes'])),
-                          int(float(qualities['number_of_features'])),
-                          int(float(qualities['number_of_instances'])))
-                tbl.append(values)
+                entry = (
+                    d.did,      # id
+                    d.file_id,  # file_id
+                    d.name,     # name
+                    int(float(qualities['number_of_classes'])),
+                    int(float(qualities['number_of_features'])),
+                    int(float(qualities['number_of_instances']))
+                )
+                entries.append(entry)
 
             # Output:
             if args['json']:
-                tbl = [dict(zip(headers, t)) for t in tbl]
+                tbl = [dict(zip(headers, e)) for e in entries]
                 print(json.dumps(tbl, indent=4, sort_keys=True))
             else:
-                print(tabulate(tbl, floatfmt=".0f", headers=headers))
+                print(tabulate(entries, floatfmt=".0f", headers=headers))
                 print('(parameters: limit={}, offset={})'.format(
                     args['limit'], args['offset']))
 
@@ -56,7 +60,7 @@ def main(config, args):
             ).response().result
 
             # Processing:
-            tbl = [
+            entry = [
                 ('id', int(res.data_set_description.id)),
                 ('name', res.data_set_description.name),
                 ('format', res.data_set_description.format),
@@ -81,9 +85,9 @@ def main(config, args):
 
             # Output:
             if args['json']:
-                print(json.dumps(dict(tbl), indent=4, sort_keys=True))
+                print(json.dumps(dict(entry), indent=4, sort_keys=True))
             else:
-                print(tabulate(tbl, headers=['name', 'value']))
+                print(tabulate(entry, headers=['name', 'value']))
                 print('(parameter: id={})'.format(args['id']))
 
         sys.stdout.flush()
