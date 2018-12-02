@@ -67,21 +67,21 @@ def _configure_parser_datasets(p):
     # subcommand `config dataset list`
     config_list_p = sub.add_parser(
         'list',
-        description='List latest datasets.',
-        help='List latest datasets.',
+        description='Show a list of datasets.',
+        help='Show a list of datasets.',
         add_help=False,
     )
     config_list_p.add_argument(
         '--limit',
         type=int,
         default=20,
-        help='Set the limit of results.',
+        help='The limit of results.',
     )
     config_list_p.add_argument(
         '--offset',
         type=int,
         default=1,
-        help='Set the offset of results.',
+        help='The offset of results.',
     )
     _add_arg_json(config_list_p)
     _add_arg_help(config_list_p)
@@ -90,8 +90,8 @@ def _configure_parser_datasets(p):
     # subcommand `config dataset show --id ID`
     config_show_p = sub.add_parser(
         'show',
-        description='Show specific dataset.',
-        help='Show specific dataset.',
+        description='Show a specific dataset.',
+        help='Show a specific dataset.',
         add_help=False,
     )
     config_show_p.add_argument(
@@ -105,7 +105,7 @@ def _configure_parser_datasets(p):
         required=False,
         default=False,
         action='store_true',
-        help='Open related site in a browser.'
+        help='Whether to open the result in the browser or not.'
     )
     _add_arg_json(config_show_p)
     _add_arg_help(config_show_p)
@@ -143,8 +143,8 @@ def _configure_parser_config(p):
     # subcommand `config view`
     config_view_p = sub.add_parser(
         'view',
-        description='Print all configuration parameters.',
-        help='Print all configuration parameters.',
+        description='Show a list of all configuration parameters.',
+        help='Show a list of all configuration parameters.',
         add_help=False,
     )
     config_view_p.set_defaults(func=main_config.main)
@@ -152,8 +152,8 @@ def _configure_parser_config(p):
     # subcommand `config set --name NAME --value VALUE`
     config_set_p = sub.add_parser(
         'set',
-        description='Edit the configuration.',
-        help='Edit a configuration parameter.',
+        description='Set a configuration parameter.',
+        help='Set a configuration parameter.',
         add_help=False,
     )
     config_set_p.set_defaults(func=main_config.main)
@@ -161,20 +161,20 @@ def _configure_parser_config(p):
         '--name', '-n',
         choices=Config.DEFAULT_PARAMS.keys(),
         required=True,
-        help='Set the key of the parameter.'
+        help='The key of the parameter.'
     )
     config_set_p.add_argument(
         '--value', '-v',
         required=True,
-        help='Set the value of the parameter.'
+        help='The value of the parameter.'
     )
     _add_arg_help(config_set_p)
 
     # subcommand `config unset --name NAME`
     config_unset_p = sub.add_parser(
         'unset',
-        description='Revert the configuration.',
-        help='Revert a configuration parameter.',
+        description='Unset a configuration parameter.',
+        help='Unset a configuration parameter.',
         add_help=False,
     )
     config_unset_p.set_defaults(func=main_config.main)
@@ -182,7 +182,7 @@ def _configure_parser_config(p):
         '--name', '-n',
         choices=Config.DEFAULT_PARAMS.keys(),
         required=True,
-        help='Set the key of the parameter.'
+        help='The key of the parameter.'
     )
     _add_arg_help(config_unset_p)
 
