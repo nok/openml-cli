@@ -65,6 +65,20 @@ paths:
           schema:
             $ref: '#/definitions/DataFeatureWrapper'
 
+  /data/list:
+    get:
+      summary: Get all datasets.
+      operationId: getAllData
+      tags:
+        - dataset
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/DataListWrapper'
+
   /data/list/limit/{limit}/offset/{offset}:
     get:
       summary: Get a list of datasets.

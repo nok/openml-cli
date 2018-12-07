@@ -19,8 +19,41 @@ def main(config, args):
     if 'subcmd' in args:
         api = API(config.apikey)
 
+        # oml dataset search <term>
+        if args['subcmd'] == 'search':
+
+            if not args['json']:
+                print('please wait ...')
+
+            # Request:
+            res = api.client.dataset.getAllData().response().result
+
+            # Filter:
+            headers = ('id', 'file_id', 'name', 'status')
+            entries = []
+            term = str(args['term']).strip().lower()
+            for d in res.data.dataset:
+                name = str(d.name).strip().lower()
+                if term in name:
+                    entry = (
+                        d.did,  # id
+                        d.file_id,
+                        d.name,
+                        d.status,
+                    )
+                    entries.append(entry)
+
+            # Output:
+            if args['json']:
+                tbl = [dict(zip(headers, e)) for e in entries]
+                print(json.dumps(tbl, indent=4, sort_keys=True))
+            else:
+                print(tabulate(entries, floatfmt=".0f", headers=headers))
+                params = '(parameters: term={}, ({} results))'
+                print(params.format(term, len(entries)))
+
         # oml dataset list --limit 20 --offset=30
-        if args['subcmd'] == 'list':
+        elif args['subcmd'] == 'list':
 
             # Request:
             res = api.client.dataset.getDataByLimitAndOffset(
@@ -29,21 +62,14 @@ def main(config, args):
             ).response().result
 
             # Processing:
-            headers = ('id', 'file_id', 'name', 'number_of_classes',
-                       'number_of_features', 'number_of_instances')
+            headers = ('id', 'file_id', 'name', 'status')
             entries = []
             for d in res.data.dataset:
-                qualities = ()
-                for idx, quality in enumerate(sorted(d.quality)):
-                    qualities += ((_camel_to_snake(quality.name), quality.value), )
-                qualities = dict(qualities)
                 entry = (
-                    d.did,      # id
-                    d.file_id,  # file_id
-                    d.name,     # name
-                    int(float(qualities['number_of_classes'])),
-                    int(float(qualities['number_of_features'])),
-                    int(float(qualities['number_of_instances']))
+                    d.did,  # id
+                    d.file_id,
+                    d.name,
+                    d.status,
                 )
                 entries.append(entry)
 

@@ -1,6 +1,6 @@
 # openml-cli
 
-Use the command line tool `openml` to interact with the official [API](https://openml.github.io/OpenML/REST-API/) of [OpenML](https://www.openml.org).
+Use the command line tool `oml` to interact with the official [API](https://openml.github.io/OpenML/REST-API/) of [OpenML](https://www.openml.org).
 
 
 ## Installation
@@ -21,7 +21,7 @@ $ pip install --no-cache-dir https://github.com/nok/openml-cli/zipball/master
 
 ```bash
 oml config {view, set, unset}
-oml dataset {list, show, download}
+oml dataset {search, list, show, download}
 ```
 
 ## Examples
@@ -36,13 +36,14 @@ oml config set --name apikey --value YOUR_APIKEY
 Datasets:
 
 ```bash
+oml dataset search <term>
 oml dataset list
-oml dataset list --limit 5 --offset 10
-oml dataset list --limit 5 --offset 10 --json
-oml dataset show --id 1
-oml dataset show --id 1 --json
-oml dataset show --id 1 --browser
-oml dataset download --id 1
+oml dataset list --limit <num> --offset <num>
+oml dataset list --limit <num> --offset <num> --json
+oml dataset show --id <num>
+oml dataset show --id <num> --json
+oml dataset show --id <num> --browser
+oml dataset download --id <num>
 ```
 
 

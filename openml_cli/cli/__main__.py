@@ -64,6 +64,22 @@ def _configure_parser_datasets(p):
     )
     sub.required = True
 
+    # subcommand `config dataset search <term>`
+    config_search_p = sub.add_parser(
+        'search',
+        description='Search a dataset.',
+        help='Search a dataset.',
+        add_help=False,
+    )
+    config_search_p.add_argument(
+        'term',
+        description='The search term.',
+        help='The search term.',
+    )
+    _add_arg_json(config_search_p)
+    _add_arg_help(config_search_p)
+    config_search_p.set_defaults(func=main_dataset.main)
+
     # subcommand `config dataset list`
     config_list_p = sub.add_parser(
         'list',
