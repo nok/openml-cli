@@ -73,7 +73,6 @@ def _configure_parser_datasets(p):
     )
     config_search_p.add_argument(
         'term',
-        description='The search term.',
         help='The search term.',
     )
     _add_arg_json(config_search_p)
