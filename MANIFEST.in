@@ -1,2 +1,2 @@
 include readme.md requirements.txt changelog.md license.txt
-recursive-include openml_cli *.txt *.py
+recursive-include openml_cli *.txt *.py *.yml
