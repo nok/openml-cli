@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import argparse
 import os
 import sys
 from argparse import ArgumentParser, SUPPRESS, RawTextHelpFormatter, _HelpAction
@@ -135,6 +135,12 @@ def _configure_parser_datasets(p):
     config_download_p.add_argument(
         'id',
         type=int,
+        help='The unique ID of a dataset.'
+    )
+    config_download_p.add_argument(
+        '--to',
+        type=str,
+        default=os.getcwd(),
         help='The unique ID of a dataset.'
     )
     _add_arg_help(config_download_p)

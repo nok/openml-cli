@@ -60,14 +60,12 @@ oml dataset show <id> --browser
 oml dataset download <id>
 ```
 
-Examples:
+Search and download a specific dataset:
 
 ```bash
 oml dataset search mnist
 oml dataset show 40996
-oml dataset show 40996 --browser
-oml dataset download 40996
-oml dataset list --limit 10 --offset 50
+oml dataset download 40996 --to ~/Downloads
 ```
 
 </details>

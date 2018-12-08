@@ -2,7 +2,6 @@
 
 import sys
 import os
-import re
 import json
 import hashlib
 import requests
@@ -23,7 +22,7 @@ def main(config, args):
         if args['subcmd'] == 'search':
 
             if not args['json']:
-                print('please wait ...')
+                print('Caching active datasets ... please wait ...')
 
             # Request:
             res = api.client.dataset.getAllData().response().result
@@ -151,7 +150,6 @@ def main(config, args):
             url = entry.get('url')
 
             # Request download:
-            print('Downloading ... {} ... please wait.'.format(url))
             headers = {'Accept-Encoding': 'gzip'}
             res = requests.get(url, stream=True, headers=headers)
 
@@ -160,19 +158,33 @@ def main(config, args):
             if 'Content-Length' in res.headers:
                 file_size = int(res.headers.get('Content-Length'))
 
-            # File name:
+            # File name and path:
             filename = url.split('/')[-1]
             filename = filename.split('?')[0]
 
-            content = res.headers.get('Content-Disposition')
-            if content:
-                filename = re.findall('filename=(.+)', content)
-                if filename and isinstance(filename, list):
-                    filename = filename[0]
+            filename_parts = filename.split('.')
+            filename = str(filename_parts[0])
+
+            suffix = None
+            if len(filename_parts) > 1:
+                suffix = filename_parts[1]
+
+            filename = '_'.join([
+                str(entry.get('id')), filename, str(entry.get('version'))
+            ])
+
+            if suffix:
+                filename += '.' + suffix
+
+            path = str(os.path.expanduser(args['to']))
+            filepath = os.path.join(path, filename)
+
+            print('Download dataset ... ')
+            print('  {}'.format(url))
+            print('  to {}'.format(filepath))
+            print('... please wait.')
 
             # Download:
-            cwd = os.getcwd()
-            filepath = os.path.join(cwd, filename)
             chunk_size = 1024
             if file_size:
                 num_bars = int(file_size / chunk_size)
@@ -195,6 +207,6 @@ def main(config, args):
             except AssertionError as e:
                 print('Warning: The checksums are not equal.')
 
-            print('Download completed ... {}'.format(filepath))
+            print('Download completed.')
 
         sys.stdout.flush()
