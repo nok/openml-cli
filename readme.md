@@ -23,7 +23,7 @@ $ pip install --no-cache-dir https://github.com/nok/openml-cli/zipball/master
     <summary><code>oml config {view, set, unset}</code></summary>
 <br>
 
-Description: List or edit the configuration.
+Description: View or change your configuration.
 
 Subcommands:
 

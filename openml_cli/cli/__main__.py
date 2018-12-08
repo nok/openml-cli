@@ -167,8 +167,8 @@ def _configure_parser_config(p):
     """)
     config_p = p.add_parser(
         'config',
-        description='List or edit the configuration.',
-        help='List or edit the configuration.',
+        description='View or change your configuration.',
+        help='View or change your configuration.',
         epilog=epilog,
         formatter_class=RawTextHelpFormatter,
         add_help=False,
