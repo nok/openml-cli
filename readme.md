@@ -6,14 +6,14 @@ Use the command line tool `oml` to interact with the official [API](https://open
 ## Installation
 
 ```bash
-$ pip install openml-cli
+pip install openml-cli
 ```
 
 If you want the [latest changes](changelog.md), you can install the package from the [master](https://github.com/nok/openml-cli/tree/master) branch:
 
 ```bash
-$ pip uninstall -y openml-cli
-$ pip install --no-cache-dir https://github.com/nok/openml-cli/zipball/master
+pip uninstall -y openml-cli
+pip install --no-cache-dir https://github.com/nok/openml-cli/zipball/master
 ```
 
 
