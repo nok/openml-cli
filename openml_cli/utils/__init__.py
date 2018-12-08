@@ -6,7 +6,7 @@ from textwrap import dedent as textwrap_dedent
 
 
 def dedent(text):
-    return six.b(textwrap_dedent(text))
+    return str(six.u(textwrap_dedent(text)))
 
 
 def camel_to_snake(text):
