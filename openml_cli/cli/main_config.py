@@ -8,10 +8,10 @@ def main(config, args):
         if args['subcmd'] == 'view':
             config.list()
 
-        # oml config set --name <NAME> --value <VALUE>
+        # oml config set <name> <value>
         elif args['subcmd'] == 'set':
             config.set(args['name'], args['value'])
 
-        # oml config unset --name <NAME>
+        # oml config unset <name>
         elif args['subcmd'] == 'unset':
             config.unset(args['name'])

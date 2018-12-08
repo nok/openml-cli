@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-import argparse
+
 import os
 import sys
-from argparse import ArgumentParser, SUPPRESS, RawTextHelpFormatter, _HelpAction
+
+from argparse import ArgumentParser
+from argparse import RawTextHelpFormatter
+from argparse import SUPPRESS
+from argparse import _HelpAction
 
 from openml_cli import __version__
 from openml_cli.cli import *
@@ -102,7 +106,7 @@ def _configure_parser_datasets(p):
     _add_arg_help(config_list_p)
     config_list_p.set_defaults(func=main_dataset.main)
 
-    # subcommand `config dataset show --id ID`
+    # subcommand `config dataset show <id>`
     config_show_p = sub.add_parser(
         'show',
         description='Show a specific dataset.',
@@ -125,7 +129,7 @@ def _configure_parser_datasets(p):
     _add_arg_help(config_show_p)
     config_show_p.set_defaults(func=main_dataset.main)
 
-    # subcommand `config dataset download --id ID`
+    # subcommand `config dataset download <id>`
     config_download_p = sub.add_parser(
         'download',
         description='Download a specific dataset.',
