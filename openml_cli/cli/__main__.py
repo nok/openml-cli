@@ -153,7 +153,7 @@ def _configure_parser_config(p):
     epilog = dedent("""
         examples:
           `oml config view`
-          `oml config set --name apikey --value YOUR_APIKEY`
+          `oml config set apikey <your_apikey>`
     """)
     config_p = p.add_parser(
         'config',
@@ -178,7 +178,7 @@ def _configure_parser_config(p):
     )
     config_view_p.set_defaults(func=main_config.main)
 
-    # subcommand `config set --name NAME --value VALUE`
+    # subcommand `config set <name> <value>`
     config_set_p = sub.add_parser(
         'set',
         description='Set a configuration parameter.',
@@ -187,30 +187,27 @@ def _configure_parser_config(p):
     )
     config_set_p.set_defaults(func=main_config.main)
     config_set_p.add_argument(
-        '--name', '-n',
+        'name',
         choices=Config.DEFAULT_PARAMS.keys(),
-        required=True,
         help='The key of the parameter.'
     )
     config_set_p.add_argument(
-        '--value', '-v',
-        required=True,
+        'value',
         help='The value of the parameter.'
     )
     _add_arg_help(config_set_p)
 
-    # subcommand `config unset --name NAME`
+    # subcommand `config unset <name>`
     config_unset_p = sub.add_parser(
         'unset',
-        description='Unset a configuration parameter.',
-        help='Unset a configuration parameter.',
+        description='Unset a configuration parameter to the default value.',
+        help='Unset a configuration parameter to the default value.',
         add_help=False,
     )
     config_unset_p.set_defaults(func=main_config.main)
     config_unset_p.add_argument(
-        '--name', '-n',
+        'name',
         choices=Config.DEFAULT_PARAMS.keys(),
-        required=True,
         help='The key of the parameter.'
     )
     _add_arg_help(config_unset_p)

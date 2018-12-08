@@ -24,13 +24,14 @@ oml config {view, set, unset}
 oml dataset {search, list, show, download}
 ```
 
-## Examples
+## API
 
 Configuration:
 
 ```bash
 oml config view
-oml config set --name apikey --value YOUR_APIKEY
+oml config set <name> <value>
+oml config unset <name>
 ```
 
 Datasets:
