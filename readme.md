@@ -42,7 +42,7 @@ oml config set apikey <your_apikey>
 </details>
 
 <details>
-    <summary><code>oml dataset {search, list, show, download}</code></summary>
+    <summary><code>oml dataset {search, show, download, list}</code></summary>
 <br>
 
 Description: Search, filter or download datasets.
@@ -51,13 +51,13 @@ Subcommands:
 
 ```bash
 oml dataset search <term>
-oml dataset list
-oml dataset list --limit <num> --offset <num>
-oml dataset list --limit <num> --offset <num> --json
 oml dataset show <id>
 oml dataset show <id> --json
 oml dataset show <id> --browser
 oml dataset download <id>
+oml dataset list
+oml dataset list --limit <num> --offset <num>
+oml dataset list --limit <num> --offset <num> --json
 ```
 
 Search and download a specific dataset:
