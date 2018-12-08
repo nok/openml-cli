@@ -30,10 +30,11 @@ setup(
     packages=find_packages(exclude=["tests.*", "tests"]),
     include_package_data=True,
     version=read_version(),
-    description='',
+    description='Use the command line tool `oml` or `openml` '
+                'to interact with the official API of OpenML.',
     author='Darius Morawiec',
-    author_email='ping@nok.onl',
-    url='https://github.com/nok/openml-cli/tree/stable',
+    author_email='mail@nok.onl',
+    url='https://github.com/nok/openml-cli',
     entry_points={
         'console_scripts': [
             'openml = openml_cli.cli.__main__:main',
@@ -47,6 +48,6 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     install_requires=parse_requirements(),
-    keywords=['openml'],
+    keywords=['openml', 'openscience', 'cli', 'datasets'],
     license='MIT',
 )
