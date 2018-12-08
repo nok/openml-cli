@@ -110,8 +110,7 @@ def _configure_parser_datasets(p):
         add_help=False,
     )
     config_show_p.add_argument(
-        '--id',
-        required=True,
+        'id',
         type=int,
         help='The unique ID of a dataset.'
     )
@@ -134,8 +133,7 @@ def _configure_parser_datasets(p):
         add_help=False,
     )
     config_download_p.add_argument(
-        '--id',
-        required=True,
+        'id',
         type=int,
         help='The unique ID of a dataset.'
     )

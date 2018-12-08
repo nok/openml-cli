@@ -40,10 +40,10 @@ oml dataset search <term>
 oml dataset list
 oml dataset list --limit <num> --offset <num>
 oml dataset list --limit <num> --offset <num> --json
-oml dataset show --id <num>
-oml dataset show --id <num> --json
-oml dataset show --id <num> --browser
-oml dataset download --id <num>
+oml dataset show <id>
+oml dataset show <id> --json
+oml dataset show <id> --browser
+oml dataset download <id>
 ```
 
 
