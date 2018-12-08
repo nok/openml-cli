@@ -1,5 +1,10 @@
 # openml-cli
 
+[![PyPI](https://img.shields.io/pypi/v/openml-cli.svg)](https://pypi.python.org/pypi/openml-cli)
+[![PyPI](https://img.shields.io/pypi/pyversions/openml-cli.svg)](https://pypi.python.org/pypi/openml-cli)
+[![GitHub license](https://img.shields.io/pypi/l/openml-cli.svg)](https://raw.githubusercontent.com/nok/openml-cli/master/license.txt)
+[![Twitter](https://img.shields.io/twitter/follow/darius_morawiec.svg?label=follow&style=popout)](https://twitter.com/darius_morawiec)
+
 Use the command line tool `oml` or `openml` to interact with the official [API](https://openml.github.io/OpenML/REST-API/) of [OpenML](https://www.openml.org).
 
 
