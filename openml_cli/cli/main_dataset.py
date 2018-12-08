@@ -105,6 +105,7 @@ def main(config, args):
                 ('upload_date', res.data_set_description.upload_date),
                 ('processing_date', res.data_set_description.processing_date),
             ]
+            description = res.data_set_description.description
 
             # Browser:
             if args['browser']:
@@ -116,7 +117,9 @@ def main(config, args):
 
             # Output:
             if args['json']:
-                print(json.dumps(dict(entry), indent=4, sort_keys=True))
+                entry = dict(entry)
+                entry['description'] = description
+                print(json.dumps(entry, indent=4, sort_keys=True))
             else:
                 print(tabulate(entry, headers=['name', 'value']))
                 print('(parameter: id={})'.format(args['id']))
