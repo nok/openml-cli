@@ -19,14 +19,13 @@ $ pip install --no-cache-dir https://github.com/nok/openml-cli/zipball/master
 
 ## Usage
 
-```bash
-oml config {view, set, unset}
-oml dataset {search, list, show, download}
-```
+<details>
+    <summary><code>oml config {view, set, unset}</code></summary>
+<br>
 
-## API
+Description: List or edit the configuration.
 
-Configuration:
+Subcommands:
 
 ```bash
 oml config view
@@ -34,7 +33,21 @@ oml config set <name> <value>
 oml config unset <name>
 ```
 
-Datasets:
+Examples:
+
+```bash
+oml config set apikey <your_apikey>
+```
+
+</details>
+
+<details>
+    <summary><code>oml dataset {search, list, show, download}</code></summary>
+<br>
+
+Description: Search, filter or download datasets.
+
+Subcommands:
 
 ```bash
 oml dataset search <term>
@@ -46,6 +59,18 @@ oml dataset show <id> --json
 oml dataset show <id> --browser
 oml dataset download <id>
 ```
+
+Examples:
+
+```bash
+oml dataset search mnist
+oml dataset show 40996
+oml dataset show 40996 --browser
+oml dataset download 40996
+oml dataset list --limit 10 --offset 50
+```
+
+</details>
 
 
 ## License
