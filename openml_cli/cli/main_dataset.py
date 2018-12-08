@@ -146,6 +146,7 @@ def main(config, args):
                 ('upload_date', res.data_set_description.upload_date),
                 ('processing_date', res.data_set_description.processing_date),
             ]
+            description = res.data_set_description.description
             entry = dict(entry)
             url = entry.get('url')
 
@@ -178,6 +179,11 @@ def main(config, args):
 
             path = str(os.path.expanduser(args['to']))
             filepath = os.path.join(path, filename)
+
+            with open(filepath + '.json', 'wt') as f:
+                entry = dict(entry)
+                entry['description'] = description
+                json.dump(entry, f, indent=4, sort_keys=True)
 
             print('Download dataset ... ')
             print('  {}'.format(url))
