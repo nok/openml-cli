@@ -13,7 +13,7 @@ from openml_cli.api.API import API
 
 def exec_search(config, args, api):
     if not args['json']:
-        print('Caching active datasets ... please wait ...')
+        print('Caching active datasets. This may take a few seconds.')
 
     # Request:
     res = api.client.dataset.getAllData().response().result
@@ -173,10 +173,9 @@ def exec_download(config, args, api):
         entry['description'] = description
         json.dump(entry, f, indent=4, sort_keys=True)
 
-    print('Download dataset ... ')
-    print('  {}'.format(url))
-    print('  to {}'.format(filepath))
-    print('... please wait.')
+    info = 'Downloading dataset "{}". This may take a few minutes.'
+    print(info.format(entry.get('name')))
+    print('Downloading dataset from ...\n{} to ...\n{} .'.format(url, filepath))
 
     # Download:
     chunk_size = 1024
