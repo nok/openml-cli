@@ -15,7 +15,7 @@ pip install openml-cli
 ```
 
 
-## Usage
+## API
 
 <details>
     <summary><code>oml config {view, set, unset}</code></summary>
@@ -69,7 +69,7 @@ oml dataset download 40996 --to ~/Downloads
 </details>
 
 
-## Example
+## Usage
 
 ```bash
 oml config set apikey <your_apikey>
